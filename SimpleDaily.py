@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-#coding:gbk
+#coding:UTF-8
 #author liupeixin
-#version 0.1 µ¥ÈËÓÊÏä·¢ËÍ¹¦ÄÜ£¬½öÖ§³Ö´¿ÎÄ±¾
-#version 0.2 Ôö¼ÓÖÜÎåÖÜ±¨ÌáĞÑ
+#version 0.1 å•äººé‚®ç®±å‘é€åŠŸèƒ½ï¼Œä»…æ”¯æŒçº¯æ–‡æœ¬
+#version 0.2 å¢åŠ å‘¨äº”å‘¨æŠ¥æé†’
 
 import email
 import mimetypes
@@ -15,7 +15,7 @@ from datetime import date
 VERSION = str(0.2)
 
 def sendEmail(authInfo, fromAdd, toAdd, subject, plainText, htmlText):
-    '''·¢ËÍÓÊ¼ş'''
+    '''å‘é€é‚®ä»¶'''
     strFrom = fromAdd
     strTo = ', '.join(toAdd)
 
@@ -27,7 +27,7 @@ def sendEmail(authInfo, fromAdd, toAdd, subject, plainText, htmlText):
         print 'incomplete login info, exit now'
         return
 
-    # Éè¶¨rootĞÅÏ¢
+    # è®¾å®šrootä¿¡æ¯
     msgRoot = MIMEMultipart('related')
     msgRoot['Subject'] = subject
     msgRoot['From'] = strFrom
@@ -43,24 +43,24 @@ def sendEmail(authInfo, fromAdd, toAdd, subject, plainText, htmlText):
     msgAlternative = MIMEMultipart('alternative')
     msgRoot.attach(msgAlternative)
 
-    #Éè¶¨´¿ÎÄ±¾ĞÅÏ¢
-    msgText = MIMEText(plainText, 'plain', 'gbk')
+    #è®¾å®šçº¯æ–‡æœ¬ä¿¡æ¯
+    msgText = MIMEText(plainText, 'plain', 'UTF-8')
     msgAlternative.attach(msgText)
 
-    #Éè¶¨HTMLĞÅÏ¢
-    msgText = MIMEText(htmlText, 'html', 'gbk')
+    #è®¾å®šHTMLä¿¡æ¯
+    msgText = MIMEText(htmlText, 'html', 'UTF-8')
     msgAlternative.attach(msgText)
     
-##    #Éè¶¨ÄÚÖÃÍ¼Æ¬ĞÅÏ¢
+##    #è®¾å®šå†…ç½®å›¾ç‰‡ä¿¡æ¯
 ##    fp = open('test.jpg', 'rb')
 ##    msgImage = MIMEImage(fp.read())
 ##    fp.close()
 ##    msgImage.add_header('Content-ID', '')
 ##    msgRoot.attach(msgImage)
 
-    #·¢ËÍÓÊ¼ş
+    #å‘é€é‚®ä»¶
     smtp = smtplib.SMTP()
-    #Éè¶¨µ÷ÊÔ¼¶±ğ£¬ÒÀÇé¿ö¶ø¶¨
+    #è®¾å®šè°ƒè¯•çº§åˆ«ï¼Œä¾æƒ…å†µè€Œå®š
     smtp.set_debuglevel(1)
     smtp.connect(server)
     smtp.login(user, passwd)
@@ -69,10 +69,10 @@ def sendEmail(authInfo, fromAdd, toAdd, subject, plainText, htmlText):
     return
 
 def doMail(describe):
-    '''³õÊ¼»¯ÓÊ¼ş²ÎÊı'''
+    '''åˆå§‹åŒ–é‚®ä»¶å‚æ•°'''
     html = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML><HEAD>
-<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<META content="text/html; charset=UTF-8" http-equiv=Content-Type>
 <META name=GENERATOR content="MSHTML 8.00.7600.16625"><LINK rel=stylesheet 
 href="BLOCKQUOTE{margin-Top: 0px; margin-Bottom: 0px; margin-Left: 2em}"></HEAD>
 <BODY style="MARGIN: 10px; FONT-FAMILY: verdana; FONT-SIZE: 10pt">
@@ -92,8 +92,8 @@ href="BLOCKQUOTE{margin-Top: 0px; margin-Bottom: 0px; margin-Left: 2em}"></HEAD>
     info = '\n' + '-'*5 + 'This mail send by Daily Mail Program V ' + VERSION + '-'*5 + '\n'
     
     day = date.today().strftime('%Y-%m-%d')
-    name = 'testName'
-    endname = 'testName'
+    name = 'æµ‹è¯•ç”¨æˆ·å'
+    endname = 'æµ‹è¯•è½æ¬¾ç”¨æˆ·å'
     
     authInfo = {}
     authInfo['server'] = 'smtp.163.com'
@@ -112,7 +112,7 @@ href="BLOCKQUOTE{margin-Top: 0px; margin-Bottom: 0px; margin-Left: 2em}"></HEAD>
     sendEmail(authInfo, fromAdd, toAdd, subject, plainText, htmlText)
 
 def getWorkDescribe():
-    '''»ñµÃ¹¤×÷ÈÕÖ¾ÊäÈë'''
+    '''è·å¾—å·¥ä½œæ—¥å¿—è¾“å…¥'''
     yes = 'n'
     line = ''
     while(True):
@@ -133,10 +133,10 @@ def getWorkDescribe():
         if(text == 'exit\n'):
             break
         yes = raw_input('The work describe:\n' + text + '\nDo you sure to send? y or n: ')
-    return text[:-1]
+    return text[:-1].decode('gbk').encode('UTF-8')
 
 def saveDialy():
-    '''±£´æÈÕÖ¾'''
+    '''ä¿å­˜æ—¥å¿—'''
     day = date.today()
     
 if __name__ == '__main__' :
